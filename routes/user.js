@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const User = require("../model/userj")
-const Post = require("../model/Post")
+const Post = require("../model/postj")
 const bcrypt = require("bcrypt")
 
 router.put("/:id", async (req, res) => {
