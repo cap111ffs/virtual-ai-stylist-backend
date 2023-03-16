@@ -6,7 +6,7 @@ const path = require("path")
 
 const mongoose = require("mongoose")
 const authRoute = require("./routes/auth")
-const authUser = require("./routes/User")
+const authUser = require("./routes/user")
 const authPost = require("./routes/posts")
 const authCat = require("./routes/categories")
 dotenv.config()
