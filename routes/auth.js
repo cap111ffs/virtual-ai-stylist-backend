@@ -6,12 +6,12 @@ const bcrypt = require("bcrypt")
 router.post("/register", async(req, res) => {
     try {
         const salt = await bcrypt.genSalt(10)
-        const hashedPass = await bcrypt.hash(req.body.password, salt)
+        const hashedPass = await bcrypt.hash(req.body.passWord, salt)
 
         const newUser = new User({
-            username: req.body.username,
+            userName: req.body.userName,
             phoneNumber: req.body.phoneNumber,
-            password: hashedPass,
+            passWord: hashedPass,
         })
 
         const user = await newUser.save()
@@ -24,15 +24,15 @@ router.post("/register", async(req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-        const user = await User.findOne({ username:req.body.username })
+        const user = await User.findOne({ userName:req.body.userName })
 
         !user && res.status(400).json("No user!") 
         
-        const validate = await bcrypt.compare(req.body.password, user.password)
+        const validate = await bcrypt.compare(req.body.passWord, user.passWord)
 
         !validate && res.status(400).json("Wrong Credentials!")
 
-        const { password, ...other } = user._doc
+        const { passWord, ...other } = user._doc
 
         res.status(200).json(other)
 
