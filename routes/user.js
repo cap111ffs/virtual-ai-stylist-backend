@@ -5,9 +5,9 @@ const bcrypt = require("bcrypt")
 
 router.put("/:id", async (req, res) => {
     if (req.body.userId === req.params.id) {
-        if (req.body.password) {
+        if (req.body.passWord) {
             const salt = await bcrypt.genSalt(10)
-            req.body.password = await bcrypt.hash(req.body.password, salt)
+            req.body.passWord = await bcrypt.hash(req.body.passWord, salt)
         }
         try {
             const updateUser = await User.findByIdAndUpdate(
@@ -35,7 +35,7 @@ router.delete("/:id", async (req, res) => {
         try {
             const user = await User.findById(req.params.id)
             try {
-                await Post.deleteMany({ username: user.username })
+                await Post.deleteMany({ userName: user.userName })
                 await User.findByIdAndDelete(req.params.id)
                 req.status(200).json("User has been delete...")
             } catch (error) {
@@ -53,7 +53,7 @@ router.delete("/:id", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
-        const { password, ...other } = user._doc
+        const { passWord, ...other } = user._doc
         res.status(200).json(other)
     } catch (error) {
         res.status(400).json(other)
