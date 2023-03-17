@@ -3,6 +3,7 @@ const app = express()
 const dotenv = require("dotenv")
 const multer = require("multer")
 const path = require("path")
+const cors = require("cors")
 
 const mongoose = require("mongoose")
 const authRoute = require("./routes/auth")
@@ -10,8 +11,10 @@ const authUser = require("./routes/user")
 const authPost = require("./routes/posts")
 const authCat = require("./routes/categories")
 dotenv.config()
+
 app.use(express.json())
 app.use("/images", express.static(path.join(__dirname, "./images")))
+app.use(cors())
 
 mongoose
 .connect(process.env.MONGDODB_CONNECTION_URL, {
