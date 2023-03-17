@@ -18,7 +18,7 @@ router.put("/:id", async (req, res) => {
     try {
         const post = await Post.findById(req.params.id)
 
-        if (post.username === req.body.username) {
+        if (post.userName === req.body.userName) {
             try {
                 const updatePost = await Post.findByIdAndUpdate(
                     req.params.id,
@@ -45,7 +45,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     try {
         const post = await Post.findById(req.params.id)
-        if (post.username === req.body.username) {
+        if (post.userName === req.body.userName) {
         try {
             await post.delete()
             res.status(200).json("Post has been deleted")
@@ -73,12 +73,12 @@ router.get("/:id", async (req, res) => {
 
 
 router.get("/", async (req, res) => {
-    const username = req.query.user
+    const userName = req.query.user
     const catName = req.query.cat
     try {
-        if (username)
+        if (userName)
         {
-            posts = await Post.find({ username: username })
+            posts = await Post.find({ userName: userName })
         } else if (catName) {
             posts = await Post.find({
                 categories: {
