@@ -16,7 +16,16 @@ router.post("/register", async(req, res) => {
         })
 
         const user = await newUser.save()
-        res.status(200).json(user)
+        const other = user._doc
+        const currentUser = {}
+        for (const key in other) {
+            if (key === '_id') {
+                currentUser['id'] = other[key]
+            } else {
+                currentUser[key] = other[key]
+            }
+        }
+        res.status(200).json(currentUser)
 
     } catch (error) {
         res.status(500).json(error)
