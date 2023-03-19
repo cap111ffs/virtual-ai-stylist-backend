@@ -24,13 +24,6 @@ mongoose
 .then(console.log("Connected to MongoDb"))
 .catch((err) => console.log(err))
 
-mongoose.set('toJSON', {
-  virtuals: true,
-  transform: (doc, converted) => {
-    delete converted._id;
-  }
-});
-
 const storage = multer.diskStorage({
     destination: (req, file, callb) => {
       callb(null, "images")
