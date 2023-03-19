@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
 
         !validate && res.status(400).json("Wrong Credentials!")
 
-        const { passWord, ...other } = user._doc
+        const  other = user._doc
         const currentUser = {}
         for (const key in other) {
             if (key === '_id') {
