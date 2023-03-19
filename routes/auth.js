@@ -29,13 +29,21 @@ router.post("/login", async (req, res) => {
 
         !user && res.status(400).json("No user!") 
         
-        const validate = await bcrypt.compare(req.body.passWord, user.passWord)
+        const validate = bcrypt.compare(req.body.passWord, user.passWord)
 
         !validate && res.status(400).json("Wrong Credentials!")
 
         const { passWord, ...other } = user._doc
+        const currentUser = {}
+        for (const key in other) {
+            if (key === '_id') {
+                currentUser['id'] = other[key]
+            } else {
+                currentUser[key] = other[key]
+            }
+        }
 
-        res.status(200).json(other)
+        res.status(200).json(currentUser)
 
     } catch (error) {
         res.status(500).json(error)
