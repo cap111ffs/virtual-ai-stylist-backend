@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const User = require("../model/userj")
+const User = require("../model/UserModel")
 const bcrypt = require("bcrypt")
 
 router.post("/register", async(req, res) => {

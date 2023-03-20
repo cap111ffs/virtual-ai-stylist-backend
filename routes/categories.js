@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const Category = require("../model/categoryj")
+const Category = require("../model/CategoryModel")
 
 router.post("/", async (req, res) => {
     const newCat = new Category(req.body)

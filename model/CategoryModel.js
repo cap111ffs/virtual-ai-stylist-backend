@@ -6,4 +6,4 @@ const CategorySchema = new mongoose.Schema({
         require: true,
     },
 })
-module.exports = mongoose.model("CategoryJ", CategorySchema)
+module.exports = mongoose.model("CategoryModel", CategorySchema)
