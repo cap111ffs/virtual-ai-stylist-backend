@@ -4,6 +4,7 @@ const UserSchema = new mongoose.Schema({
     userName: {
         type: String,
         require: true,
+        unique: false,
     },
     phoneNumber: {
         type: String,
@@ -13,10 +14,12 @@ const UserSchema = new mongoose.Schema({
     passWord: {
         type: String,
         require: true,
+        unique: false,
     },
     profilePic: {
         type: String,
         require: false,
+        unique: false,
     },
 },
     {
