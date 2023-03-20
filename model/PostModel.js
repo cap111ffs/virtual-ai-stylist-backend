@@ -1,30 +1,32 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
-const PostSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema(
+  {
     title: {
-        type: String,
-        require: true,
-        unique: true,
+      type: String,
+      require: true,
+      unique: true,
     },
     desc: {
-        type: String,
-        require: true,
+      type: String,
+      require: true,
     },
     photo: {
-        type: String,
-        require: false,
+      type: String,
+      require: false,
     },
     userName: {
-        type: String,
-        require: true,
+      type: String,
+      require: true,
     },
     categories: {
-        type: Array,
-        require: false,
+      type: Array,
+      require: false,
     },
-},  
-    {
+  },
+  {
     timestamps: true,
-    }
+  },
 )
-module.exports = mongoose.model("PostModel", PostSchema)
+
+module.exports = mongoose.model('PostModel', PostSchema)
