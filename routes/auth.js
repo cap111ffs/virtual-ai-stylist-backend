@@ -2,7 +2,6 @@ const router = require("express").Router()
 const User = require("../model/userj")
 const bcrypt = require("bcrypt")
 
-
 router.post("/register", async(req, res) => {
     try {
         const salt = await bcrypt.genSalt(10)
@@ -15,16 +14,10 @@ router.post("/register", async(req, res) => {
             profilePic: req.body.profilePic,
         })
 
-        const user = await newUser.save()
-        const other = user._doc
-        const currentUser = {}
-        for (const key in other) {
-            if (key === '_id') {
-                currentUser['id'] = other[key]
-            } else {
-                currentUser[key] = other[key]
-            }
-        }
+        const { _doc: user } = await newUser.save()
+        const { _id, ...currentUser } = user
+        currentUser.id = _id
+        
         res.status(200).json(currentUser)
 
     } catch (error) {
@@ -34,7 +27,7 @@ router.post("/register", async(req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-        const user = await User.findOne({ userName:req.body.userName })
+        const user = await User.findOne({ phoneNumber: req.body.phoneNumber })
 
         !user && res.status(400).json("No user!") 
         
@@ -42,15 +35,8 @@ router.post("/login", async (req, res) => {
 
         !validate && res.status(400).json("Wrong Credentials!")
 
-        const  other = user._doc
-        const currentUser = {}
-        for (const key in other) {
-            if (key === '_id') {
-                currentUser['id'] = other[key]
-            } else {
-                currentUser[key] = other[key]
-            }
-        }
+        const { _id, ...currentUser } = user._doc
+        currentUser.id = _id
 
         res.status(200).json(currentUser)
 
