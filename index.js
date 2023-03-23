@@ -4,18 +4,17 @@ const dotenv = require('dotenv')
 const multer = require('multer')
 const path = require('path')
 const cors = require('cors')
-
 const mongoose = require('mongoose')
 const authRoute = require('./routes/auth')
 const authUser = require('./routes/user')
 const authPost = require('./routes/posts')
 const authCat = require('./routes/categories')
+const uuid = require('uuid')
 dotenv.config()
 
 app.use(express.json())
-app.use('/images', express.static(path.join(__dirname, './images')))
 app.use(cors())
-
+app.use('/images', express.static('images'))
 mongoose
   .connect(process.env.MONGDODB_CONNECTION_URL, {
     useNewUrlParser: true,
@@ -24,19 +23,21 @@ mongoose
   .then(console.log('Connected to MongoDb'))
   .catch((err) => console.log(err))
 
+let filename
 const storage = multer.diskStorage({
-  destination: (req, file, callb) => {
-    callb(null, 'images')
+  destination: (_, __, cb) => {
+    cb(null, 'images')
   },
-  filename: (req, file, callb) => {
-    callb(null, 'file.jpg')
+  filename: (_, file, cb) => {
+    filename = uuid.v4() + '.jpg'
+    cb(null, filename)
   },
 })
-
-const upload = multer({ storage: storage })
-
-app.post('/upload', upload.single('file'), (req, res) => {
-  res.status(200).json('File has been uploaded')
+const upload = multer({ storage })
+app.post('/upload', upload.single('image'), (req, res) => {
+  res.json({
+    url: `/images/${filename}`,
+  })
 })
 
 app.use('/auth', authRoute)
