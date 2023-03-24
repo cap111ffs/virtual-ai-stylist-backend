@@ -7,37 +7,31 @@ dotenv.config()
 let userId
 let otpCode
 
-router.post('/register', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
+    const user = await User.findOne({ phoneNumber: req.body.phoneNumber })
+
+    if (user) {
+      const { _id, ...currentUser } = user._doc
+      userId = _id
+
+      otpCode = '54321' // here is generate code like otpCode = generateCode()
+
+      sendOtpMessage(req.body.phoneNumber, otpCode)
+
+      return res.status(200).json(currentUser)
+    }
+
     const newUser = new User({
       userName: req.body.userName,
       phoneNumber: req.body.phoneNumber,
     })
 
-    const { _doc: user } = await newUser.save()
-    const { _id, ...currentUser } = user
+    const { _doc: createdUser } = await newUser.save()
+    const { _id, ...currentUser } = createdUser
     userId = _id
 
-    otpCode = 'hell nahhh blud, what u waffling bout' // here is generate code like generateCode()
-
-    sendOtpMessage(req.body.phoneNumber, otpCode)
-
-    res.status(200).json(currentUser)
-  } catch (error) {
-    res.status(500).json(error)
-  }
-})
-
-router.post('/login', async (req, res) => {
-  try {
-    const user = await User.findOne({ phoneNumber: req.body.phoneNumber })
-
-    !user && res.status(400).json('No user!')
-
-    const { _id, ...currentUser } = user._doc
-    userId = _id
-
-    otpCode = '54321' // here is generate code like generateCode()
+    otpCode = 'hell nahhh blud, wha u waffling bout' // here is generate code like otpCode = generateCode()
 
     sendOtpMessage(req.body.phoneNumber, otpCode)
 
