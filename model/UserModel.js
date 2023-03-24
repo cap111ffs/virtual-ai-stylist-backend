@@ -12,11 +12,6 @@ const UserSchema = new mongoose.Schema(
       require: true,
       unique: true,
     },
-    passWord: {
-      type: String,
-      require: true,
-      unique: false,
-    },
     profilePic: {
       type: String,
       require: false,
