@@ -2,10 +2,9 @@ const router = require('express').Router()
 const User = require('../model/UserModel')
 const dotenv = require('dotenv')
 const sendOtpMessage = require('../utils/sendOtpMessage')
+const generateRandomOtpCode = require('../utils/generateOtpCode')
+const OtpCode = require('../model/OtpCodeModel')
 dotenv.config()
-
-let userId
-let otpCode
 
 router.post('/', async (req, res) => {
   try {
@@ -13,26 +12,29 @@ router.post('/', async (req, res) => {
 
     if (user) {
       const { _id, ...currentUser } = user._doc
-      userId = _id
-
-      otpCode = '54321' // here is generate code like otpCode = generateCode()
-
+      const otpCode = generateRandomOtpCode(5)
+      const newOtpCode = new OtpCode({
+        code: generateRandomOtpCode(5),
+        phoneNumber: req.body.phoneNumber,
+        id: _id,
+      })
+      const { _doc: createdOtpCode } = await newOtpCode.save()
       sendOtpMessage(req.body.phoneNumber, otpCode)
-
       return res.status(200).json(currentUser)
     }
-
+    const otpCode = generateRandomOtpCode(5)
     const newUser = new User({
       userName: req.body.userName,
       phoneNumber: req.body.phoneNumber,
     })
-
     const { _doc: createdUser } = await newUser.save()
     const { _id, ...currentUser } = createdUser
-    userId = _id
-
-    otpCode = 'hell nahhh blud, wha u waffling bout' // here is generate code like otpCode = generateCode()
-
+    const newOtpCode = new OtpCode({
+      code: generateRandomOtpCode(5),
+      phoneNumber: req.body.phoneNumber,
+      id: _id,
+    })
+    const { _doc: createdOtpCode } = await newOtpCode.save()
     sendOtpMessage(req.body.phoneNumber, otpCode)
 
     res.status(200).json(currentUser)
@@ -43,8 +45,9 @@ router.post('/', async (req, res) => {
 
 router.post('/verify', async (req, res) => {
   try {
+    const otpCode = await OtpCode.findOne({ phoneNumber: req.body.phoneNumber })
     if (req.body.code === otpCode) {
-      res.status(200).json({ userId })
+      res.status(200).json({ code: req.body.code })
     } else {
       throw new Error('Invalid code')
     }
