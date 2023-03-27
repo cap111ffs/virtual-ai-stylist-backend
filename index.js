@@ -1,17 +1,19 @@
-const express = require('express')
+import express from 'express'
 const app = express()
-const dotenv = require('dotenv')
-const multer = require('multer')
-const path = require('path')
-const cors = require('cors')
-const mongoose = require('mongoose')
-const authRoute = require('./routes/auth')
-const authUser = require('./routes/user')
-const authPost = require('./routes/posts')
-const authCat = require('./routes/categories')
-const uuid = require('uuid')
-dotenv.config()
+import dotenv from 'dotenv'
+import multer from 'multer'
+import * as path from 'path'
+import cors from 'cors'
+import mongoose from 'mongoose'
+import authRoute from './routes/auth.js'
+import authUser from './routes/user.js'
+import authPost from './routes/posts.js'
+import authCat from './routes/categories.js'
+import * as uuid from 'uuid'
+import Router from 'express'
+const router = new Router()
 
+dotenv.config()
 app.use(express.json())
 app.use(cors())
 app.use('/images', express.static('images'))

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const OtpCodeSchema = new mongoose.Schema(
   {
@@ -28,4 +28,4 @@ const OtpCodeSchema = new mongoose.Schema(
   },
 )
 
-module.exports = mongoose.model('OtpCodeModel', OtpCodeSchema)
+export default mongoose.model('OtpCodeModel', OtpCodeSchema)

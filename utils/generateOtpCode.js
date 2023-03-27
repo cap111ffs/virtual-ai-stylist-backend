@@ -5,4 +5,4 @@ const generateRandomOtpCode = (length) => {
   }
   return code
 }
-module.exports = generateRandomOtpCode
+export default generateRandomOtpCode

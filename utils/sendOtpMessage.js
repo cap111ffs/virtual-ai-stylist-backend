@@ -1,4 +1,4 @@
-const smsaerov2 = require('smsaero-v2')
+import smsaerov2 from 'smsaero-v2'
 
 const sendOtpMessage = async (phoneNumber, message) => {
   const client = new smsaerov2.Client(process.env.SMSAERO_LOGIN_URL, process.env.SMSAERO_API_KEY)
@@ -11,4 +11,4 @@ const sendOtpMessage = async (phoneNumber, message) => {
   )
 }
 
-module.exports = sendOtpMessage
+export default sendOtpMessage

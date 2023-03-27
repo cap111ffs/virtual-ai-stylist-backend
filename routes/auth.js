@@ -1,10 +1,11 @@
-const router = require('express').Router()
-const User = require('../model/UserModel')
-const dotenv = require('dotenv')
-const sendOtpMessage = require('../utils/sendOtpMessage')
-const generateRandomOtpCode = require('../utils/generateOtpCode')
-const OtpCode = require('../model/OtpCodeModel')
+import User from '../model/UserModel.js'
+import dotenv from 'dotenv'
+import sendOtpMessage from '../utils/sendOtpMessage.js'
+import generateRandomOtpCode from '../utils/generateOtpCode.js'
+import OtpCode from '../model/OtpCodeModel.js'
 dotenv.config()
+import Router from 'express'
+const router = new Router()
 
 router.post('/', async (req, res) => {
   try {
@@ -56,4 +57,6 @@ router.post('/verify', async (req, res) => {
   }
 })
 
-module.exports = router
+// module.exports = router
+
+export default router

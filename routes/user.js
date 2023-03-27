@@ -1,7 +1,8 @@
-const router = require('express').Router()
-const User = require('../model/UserModel')
-const Post = require('../model/PostModel')
-const bcrypt = require('bcrypt')
+import User from '../model/UserModel.js'
+import Post from '../model/PostModel.js'
+import bcrypt from 'bcrypt'
+import Router from 'express'
+const router = new Router()
 
 router.put('/:id', async (req, res) => {
   if (req.body.userId === req.params.id) {
@@ -57,4 +58,5 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-module.exports = router
+// module.exports = router
+export default router

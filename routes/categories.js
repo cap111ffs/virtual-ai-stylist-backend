@@ -1,5 +1,6 @@
-const router = require('express').Router()
-const Category = require('../model/CategoryModel')
+import Category from '../model/CategoryModel.js'
+import Router from 'express'
+const router = new Router()
 
 router.post('/', async (req, res) => {
   const newCat = new Category(req.body)
@@ -21,4 +22,6 @@ router.get('/', async (req, res) => {
   }
 })
 
-module.exports = router
+// module.exports = router
+export default router
+
