@@ -5,12 +5,15 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "lint": "eslint ./"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "airbnb": "^0.0.2",
     "bcrypt": "^5.1.0",
+    "child_process": "^1.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -20,12 +23,18 @@
     "node-sms-ru": "^0.0.6",
     "nodemon": "^2.0.21",
     "path": "^0.12.7",
+    "plugin": "^0.3.3",
     "smsaero": "^0.0.3",
     "smsaero-v2": "^0.1.4",
     "uuid": "^9.0.0",
     "v2": "^0.0.3"
   },
   "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-recommended": "^4.1.0",
+    "eslint-plugin-import": "^2.27.5",
     "prettier": "2.8.5"
   }
 }
