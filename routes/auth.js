@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
         phoneNumber: currentUser.phoneNumber,
         id: _id,
       }).save();
-      deleteCurrentOtpCode(_id, 15);
+      deleteCurrentOtpCode(_id, 240);
 
       sendOtpMessage(currentUser.phoneNumber, otpCode);
 
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
       phoneNumber: currentUser.phoneNumber,
       id: _id,
     }).save();
-    deleteCurrentOtpCode(_id, 15);
+    deleteCurrentOtpCode(_id, 240);
 
     sendOtpMessage(currentUser.phoneNumber, otpCode);
 
