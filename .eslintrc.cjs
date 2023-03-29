@@ -10,6 +10,15 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'always',
+        ts: 'always',
+      },
+    ],
+    'no-underscore-dangle': 'off',
     'linebreak-style': [0],
     'max-len': [2, 100],
     'no-console': 'off',

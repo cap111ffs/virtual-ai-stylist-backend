@@ -1,5 +1,5 @@
 import Router from 'express';
-import Post from '../model/PostModel';
+import Post from '../model/PostModel.js';
 
 const router = new Router();
 
@@ -71,6 +71,7 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
   const userName = req.query.user;
   const catName = req.query.cat;
+  let posts;
   try {
     if (userName) {
       posts = await Post.find({ userName });
@@ -82,12 +83,12 @@ router.get('/', async (req, res) => {
       });
     } else {
       posts = await Post.find();
+      res.status(200).json(posts);
     }
-    res.status(404).json(error);
+    res.status(404).json(new Error());
   } catch (error) {
     res.status(404).json(error);
   }
 });
 
-// module.exports = router
 export default router;

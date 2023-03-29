@@ -1,11 +1,11 @@
-import dotenv from 'dotenv';
 import Router from 'express';
-import User from '../model/UserModel';
-import sendOtpMessage from '../utils/sendOtpMessage';
-import generateRandomOtpCode from '../utils/generateOtpCode';
-import OtpCode from '../model/OtpCodeModel';
 
-dotenv.config();
+import User from '../model/UserModel.js';
+import OtpCode from '../model/OtpCodeModel.js';
+
+import generateRandomOtpCode from '../utils/generateOtpCode.js';
+import sendOtpMessage from '../utils/sendOtpMessage.js';
+import deleteCurrentOtpCode from '../utils/deleteCurrentOtpCode.js';
 
 const router = new Router();
 
@@ -18,12 +18,12 @@ router.post('/', async (req, res) => {
     if (user) {
       const { _id, ...currentUser } = user._doc;
 
-      const newOtpCode = await new OtpCode({
+      await new OtpCode({
         code: otpCode,
         phoneNumber: currentUser.phoneNumber,
         id: _id,
       }).save();
-      deleteCurrentOtpCode(_id, 240);
+      deleteCurrentOtpCode(_id, 15);
 
       sendOtpMessage(currentUser.phoneNumber, otpCode);
 
@@ -38,18 +38,18 @@ router.post('/', async (req, res) => {
     const { _doc: createdUser } = await newUser.save();
     const { _id, ...currentUser } = createdUser;
 
-    const newOtpCode = await new OtpCode({
+    await new OtpCode({
       code: otpCode,
       phoneNumber: currentUser.phoneNumber,
       id: _id,
     }).save();
-    deleteCurrentOtpCode(_id, 240);
+    deleteCurrentOtpCode(_id, 15);
 
     sendOtpMessage(currentUser.phoneNumber, otpCode);
 
-    res.status(200).json(currentUser);
+    return res.status(200).json(currentUser);
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 });
 
@@ -63,10 +63,8 @@ router.post('/verify', async (req, res) => {
 
     throw new Error('Invalid code');
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 });
-
-// module.exports = router
 
 export default router;

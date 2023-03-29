@@ -1,5 +1,5 @@
 import Router from 'express';
-import Category from '../model/CategoryModel';
+import Category from '../model/CategoryModel.js';
 
 const router = new Router();
 
@@ -23,5 +23,4 @@ router.get('/', async (req, res) => {
   }
 });
 
-// module.exports = router
 export default router;

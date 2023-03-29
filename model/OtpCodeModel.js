@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
+import { Schema, model } from 'mongoose';
 
-const OtpCodeSchema = new mongoose.Schema(
+const OtpCodeSchema = new Schema(
   {
     id: {
       type: String,
@@ -21,6 +21,6 @@ const OtpCodeSchema = new mongoose.Schema(
   {
     timestamps: true,
   },
-)
+);
 
-export default mongoose.model('OtpCodeModel', OtpCodeSchema)
+export default model('OtpCodeModel', OtpCodeSchema);
