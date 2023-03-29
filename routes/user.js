@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import User from '../model/UserModel.js';
 import Post from '../model/PostModel.js';
 
