@@ -2,11 +2,11 @@
   "trailingComma": "all",
   "tabWidth": 2,
   "printWidth": 100,
-  "semi": false,
+  "semi": true,
 
   "singleQuote": true,
   "quoteProps": "as-needed",
-  "jsxSingleQuote": false,
+  "jsxSingleQuote": true,
 
   "bracketSpacing": true,
   "proseWrap": "always",

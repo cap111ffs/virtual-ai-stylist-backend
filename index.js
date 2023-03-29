@@ -1,19 +1,15 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import multer from 'multer';
-import * as path from 'path';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import * as uuid from 'uuid';
-// eslint-disable-next-line import/no-duplicates
-import Router from 'express';
-import authRoute from './routes/auth';
-import authUser from './routes/user';
-import authPost from './routes/posts';
-import authCat from './routes/categories';
+import dotenv from 'dotenv';
+import authRoute from './routes/auth.js';
+import authUser from './routes/user.js';
+import authPost from './routes/posts.js';
+import authCat from './routes/categories.js';
 
 const app = express();
-const router = new Router();
 
 dotenv.config();
 app.use(express.json());
