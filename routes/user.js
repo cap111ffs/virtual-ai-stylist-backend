@@ -1,7 +1,4 @@
 import { Router } from 'express';
-
-import { genSalt, hash } from 'bcrypt';
-
 import User from '../model/UserModel.js';
 import Post from '../model/PostModel.js';
 
@@ -9,10 +6,6 @@ const router = new Router();
 
 router.put('/:id', async (req, res) => {
   if (req.body.userId === req.params.id) {
-    if (req.body.passWord) {
-      const salt = await genSalt(10);
-      req.body.passWord = await hash(req.body.passWord, salt);
-    }
     try {
       const updateUser = await User.findByIdAndUpdate(
         req.params.id,
@@ -39,7 +32,7 @@ router.delete('/:id', async (req, res) => {
       try {
         await Post.deleteMany({ userName: user.userName });
         await User.findByIdAndDelete(req.params.id);
-        req.status(200).json('User has been delete...');
+        req.status(200).json('User has been deleted...');
       } catch (error) {
         res.status(500).json(error);
       }
@@ -54,7 +47,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    const { passWord, ...other } = user._doc;
+    const { phoneNumber, ...other } = user._doc;
     res.status(200).json(other);
   } catch (error) {
     res.status(400).json(error);
