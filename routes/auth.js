@@ -58,7 +58,7 @@ router.post('/verify', async (req, res) => {
     const otpCode = await OtpCode.findOne({ phoneNumber: req.body.phoneNumber });
 
     if (req.body.code === otpCode.code) {
-      deleteCurrentOtpCode(otpCode.id, 240);
+      deleteCurrentOtpCode(otpCode.id, 0);
 
       return res.status(200).json({ id: otpCode.id });
     }
