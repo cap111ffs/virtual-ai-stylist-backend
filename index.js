@@ -4,20 +4,11 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import * as uuid from 'uuid';
 import dotenv from 'dotenv';
-import { spawn } from 'child_process';
 import authRoute from './routes/auth.js';
 import authUser from './routes/user.js';
 import authPost from './routes/posts.js';
 import authCat from './routes/categories.js';
 
-const childPython = spawn('Python', ['segmentation/main.py']);
-
-childPython.stdout.on('data', (data) => {
-  console.log(data);
-});
-childPython.on('close', (code) => {
-  console.log(`ChildProccess exited with code ${code}`);
-});
 const app = express();
 
 dotenv.config();
