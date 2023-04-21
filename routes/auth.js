@@ -18,11 +18,14 @@ router.post('/', async (req, res) => {
     if (user) {
       const { _id, ...currentUser } = user._doc;
 
-      await new OtpCode({
-        code: otpCode,
-        phoneNumber: currentUser.phoneNumber,
-        id: _id,
-      }).save();
+      deleteCurrentOtpCode(_id, 0);
+      setTimeout(() => (
+        new OtpCode({
+          code: otpCode,
+          phoneNumber: currentUser.phoneNumber,
+          id: _id,
+        }).save()
+      ), 1000);
       deleteCurrentOtpCode(_id, 240);
 
       sendOtpMessage(currentUser.phoneNumber, otpCode);
@@ -38,17 +41,22 @@ router.post('/', async (req, res) => {
     const { _doc: createdUser } = await newUser.save();
     const { _id, ...currentUser } = createdUser;
 
-    await new OtpCode({
-      code: otpCode,
-      phoneNumber: currentUser.phoneNumber,
-      id: _id,
-    }).save();
+    deleteCurrentOtpCode(_id, 0);
+    setTimeout(
+      () => new OtpCode({
+        code: otpCode,
+        phoneNumber: currentUser.phoneNumber,
+        id: _id,
+      }).save(),
+      1000,
+    );
     deleteCurrentOtpCode(_id, 240);
 
     sendOtpMessage(currentUser.phoneNumber, otpCode);
 
     return res.status(200).json(currentUser);
   } catch (error) {
+    console.log(error);
     return res.status(500).json(error);
   }
 });
@@ -58,7 +66,7 @@ router.post('/verify', async (req, res) => {
     const otpCode = await OtpCode.findOne({ phoneNumber: req.body.phoneNumber });
 
     if (req.body.code === otpCode.code) {
-      deleteCurrentOtpCode(otpCode.id, 0);
+      deleteCurrentOtpCode(otpCode.id, 1);
 
       return res.status(200).json({ id: otpCode.id });
     }
