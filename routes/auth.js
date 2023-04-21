@@ -18,14 +18,11 @@ router.post('/', async (req, res) => {
     if (user) {
       const { _id, ...currentUser } = user._doc;
 
-      deleteCurrentOtpCode(_id, 0);
-      setTimeout(() => (
-        new OtpCode({
-          code: otpCode,
-          phoneNumber: currentUser.phoneNumber,
-          id: _id,
-        }).save()
-      ), 1000);
+      new OtpCode({
+        code: otpCode,
+        phoneNumber: currentUser.phoneNumber,
+        id: _id,
+      }).save();
       deleteCurrentOtpCode(_id, 240);
 
       sendOtpMessage(currentUser.phoneNumber, otpCode);
@@ -40,16 +37,11 @@ router.post('/', async (req, res) => {
 
     const { _doc: createdUser } = await newUser.save();
     const { _id, ...currentUser } = createdUser;
-
-    deleteCurrentOtpCode(_id, 0);
-    setTimeout(
-      () => new OtpCode({
-        code: otpCode,
-        phoneNumber: currentUser.phoneNumber,
-        id: _id,
-      }).save(),
-      1000,
-    );
+    new OtpCode({
+      code: otpCode,
+      phoneNumber: currentUser.phoneNumber,
+      id: _id,
+    }).save();
     deleteCurrentOtpCode(_id, 240);
 
     sendOtpMessage(currentUser.phoneNumber, otpCode);
