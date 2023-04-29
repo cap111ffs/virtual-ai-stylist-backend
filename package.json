@@ -29,6 +29,7 @@
     "uuid": "^9.0.0",
     "v2": "^0.0.3"
   },
+  
   "devDependencies": {
     "eslint": "^8.36.0",
     "eslint-config-airbnb": "^19.0.4",

@@ -4,7 +4,6 @@ import User from '../model/UserModel.js';
 import OtpCode from '../model/OtpCodeModel.js';
 
 import generateRandomOtpCode from '../utils/generateOtpCode.js';
-import sendOtpMessage from '../utils/sendOtpMessage.js';
 import deleteCurrentOtpCode from '../utils/deleteCurrentOtpCode.js';
 
 const router = new Router();
@@ -18,14 +17,11 @@ router.post('/', async (req, res) => {
     if (user) {
       const { _id, ...currentUser } = user._doc;
 
-      deleteCurrentOtpCode(_id, 0);
-      setTimeout(() => (
-        new OtpCode({
-          code: otpCode,
-          phoneNumber: currentUser.phoneNumber,
-          id: _id,
-        }).save()
-      ), 1000);
+      new OtpCode({
+        code: otpCode,
+        phoneNumber: currentUser.phoneNumber,
+        id: _id,
+      }).save();
       deleteCurrentOtpCode(_id, 240);
 
       return res.status(200).json(currentUser);
@@ -38,16 +34,11 @@ router.post('/', async (req, res) => {
 
     const { _doc: createdUser } = await newUser.save();
     const { _id, ...currentUser } = createdUser;
-
-    deleteCurrentOtpCode(_id, 0);
-    setTimeout(
-      () => new OtpCode({
-        code: otpCode,
-        phoneNumber: currentUser.phoneNumber,
-        id: _id,
-      }).save(),
-      1000,
-    );
+    new OtpCode({
+      code: otpCode,
+      phoneNumber: currentUser.phoneNumber,
+      id: _id,
+    }).save();
     deleteCurrentOtpCode(_id, 240);
 
     return res.status(200).json(currentUser);

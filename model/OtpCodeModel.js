@@ -5,7 +5,7 @@ const OtpCodeSchema = new Schema(
     id: {
       type: String,
       require: true,
-      unique: true,
+      unique: false,
     },
     code: {
       type: String,
@@ -15,7 +15,7 @@ const OtpCodeSchema = new Schema(
     phoneNumber: {
       type: String,
       require: true,
-      unique: true,
+      unique: false,
     },
   },
   {
