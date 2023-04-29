@@ -28,8 +28,6 @@ router.post('/', async (req, res) => {
       ), 1000);
       deleteCurrentOtpCode(_id, 240);
 
-      sendOtpMessage(currentUser.phoneNumber, otpCode);
-
       return res.status(200).json(currentUser);
     }
 
@@ -51,8 +49,6 @@ router.post('/', async (req, res) => {
       1000,
     );
     deleteCurrentOtpCode(_id, 240);
-
-    sendOtpMessage(currentUser.phoneNumber, otpCode);
 
     return res.status(200).json(currentUser);
   } catch (error) {
