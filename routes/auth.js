@@ -19,6 +19,7 @@ router.post('/', async (req, res) => {
       const { _id, ...currentUser } = user._doc;
 
       if (req.body.profilePic) {
+        currentUser.profilePic = req.body.profilePic;
         await User.findByIdAndUpdate(_id, { profilePic: req.body.profilePic });
       }
 
