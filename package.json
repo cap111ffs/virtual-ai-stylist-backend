@@ -23,13 +23,12 @@
     "node-sms-ru": "^0.0.6",
     "nodemon": "^2.0.21",
     "path": "^0.12.7",
-    "plugin": "^0.3.3",
+    "plugin": "^0.0.15",
     "smsaero": "^0.0.3",
     "smsaero-v2": "^0.1.4",
     "uuid": "^9.0.0",
     "v2": "^0.0.3"
   },
-  
   "devDependencies": {
     "eslint": "^8.36.0",
     "eslint-config-airbnb": "^19.0.4",
