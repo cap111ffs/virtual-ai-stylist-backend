@@ -8,6 +8,8 @@ import authRoute from './routes/auth.js';
 import authUser from './routes/user.js';
 import authPost from './routes/posts.js';
 import authCat from './routes/categories.js';
+import authCard from './routes/card.js';
+import authCards from './routes/cards.js';
 
 const app = express();
 
@@ -44,6 +46,8 @@ app.use('/auth', authRoute);
 app.use('/users', authUser);
 app.use('/posts', authPost);
 app.use('/category', authCat);
+app.use('/card', authCard);
+app.use('/cards', authCards);
 
 app.listen('4444', () => {
   console.log('Backend running...');
