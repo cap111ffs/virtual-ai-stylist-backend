@@ -18,6 +18,7 @@ module.exports = {
         ts: 'always',
       },
     ],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-underscore-dangle': 'off',
     'linebreak-style': [0],
     'max-len': [2, 100],
