@@ -4,6 +4,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import * as uuid from 'uuid';
 import dotenv from 'dotenv';
+import axios from 'axios';
 import authRoute from './routes/auth.js';
 import authUser from './routes/user.js';
 import authPost from './routes/posts.js';
@@ -35,10 +36,22 @@ const storage = multer.diskStorage({
     cb(null, filename);
   },
 });
+
 const upload = multer({ storage });
 app.post('/upload', upload.single('image'), (req, res) => {
   res.json({
     url: `/images/${filename}`,
+  });
+});
+
+app.post('/upload-look', async (req, res) => {
+  const AIPicture = await axios
+    .post('https://{ipAddresAI}:5000/{route}', req.body.httpLink)
+    .then((response) => response)
+    .catch((error) => `AI error ${error}`);
+
+  res.json({
+    image: AIPicture,
   });
 });
 
@@ -49,6 +62,6 @@ app.use('/category', authCat);
 app.use('/card', authCard);
 app.use('/cards', authCards);
 
-app.listen('4444', () => {
+app.listen('3333', () => {
   console.log('Backend running...');
 });
